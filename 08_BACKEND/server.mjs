@@ -30,9 +30,10 @@ export function createApp({dbPath=path.join(process.env.VANMACH_DATA_DIR??path.j
  if(dbPath!==':memory:')fs.mkdirSync(path.dirname(dbPath),{recursive:true});
  const db=new DatabaseSync(dbPath);
  db.exec('PRAGMA journal_mode=WAL; CREATE TABLE IF NOT EXISTS rooms(code TEXT PRIMARY KEY, data TEXT NOT NULL); CREATE TABLE IF NOT EXISTS usage(bucket TEXT PRIMARY KEY, count INTEGER NOT NULL);');
- const envApiKey=apiKey||process.env.GEMINI_API_KEY||'';
+ const envApiKey=(apiKey||process.env.GEMINI_API_KEY||'').trim();
  const envModel=apiKey?model:(process.env.GEMINI_API_KEY?(process.env.GEMINI_MODEL||'gemini-3.5-flash-lite'):model);
- const profiles=new OpenAIProfiles(db,{keyFile:dbPath===':memory:'?null:path.join(path.dirname(dbPath),'local-encryption.key'),fallbackKey:envApiKey,fallbackModel:envModel});
+ const envProvider=apiKey?'':(process.env.GEMINI_API_KEY?'gemini':'');
+ const profiles=new OpenAIProfiles(db,{keyFile:dbPath===':memory:'?null:path.join(path.dirname(dbPath),'local-encryption.key'),fallbackKey:envApiKey,fallbackModel:envModel,fallbackProvider:envProvider});
  const auth=new AuthService(db,{config:authEnvironment(),fetchImpl,...authOptions});
  const adminToken=secret();
  const payments=new PaymentSettings(db,{keyFile:dbPath===':memory:'?null:path.join(path.dirname(dbPath),'payment-encryption.key'),cloudCredentials:paymentCredentialsFromEnvironment()});

@@ -6,8 +6,9 @@ const PROVIDERS = new Set(['openai', 'gemini']);
 
 function detectProvider(apiKey, fallback = 'openai') {
  if (typeof apiKey === 'string') {
-  if (apiKey.startsWith('AIza')) return 'gemini';
-  if (apiKey.startsWith('sk-')) return 'openai';
+  const trimmed = apiKey.trim();
+  if (trimmed.startsWith('AIza') || trimmed.startsWith('AQ.')) return 'gemini';
+  if (trimmed.startsWith('sk-')) return 'openai';
  }
  return PROVIDERS.has(fallback) ? fallback : 'openai';
 }
@@ -50,7 +51,7 @@ export class OpenAIProfiles {
    ? (PROVIDERS.has(provider)?provider:(() => {throw new Error('Nhà cung cấp AI không hợp lệ.');})())
    : detectProvider(value, old?.provider||'openai');
   if(resolvedProvider==='gemini'){
-   if(typeof value!=='string'||!/^AIza[A-Za-z0-9_-]{20,200}$/.test(value))throw new Error('Khóa Gemini API chưa đúng định dạng (bắt đầu bằng AIza…).');
+   if(typeof value!=='string'||!/^(AIza[A-Za-z0-9_-]{20,200}|AQ\.[A-Za-z0-9_.-]{16,250})$/.test(value.trim()))throw new Error('Khóa Gemini API chưa đúng định dạng (bắt đầu bằng AIza… hoặc AQ.…).');
   }else{
    if(typeof value!=='string'||!/^sk-[A-Za-z0-9_-]{10,300}$/.test(value))throw new Error('Khóa OpenAI API chưa đúng định dạng (bắt đầu bằng sk-…).');
   }
