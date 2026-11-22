@@ -1,0 +1,78 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kết nối AI · VănMạch</title><style>
+*{box-sizing:border-box}body{background:#faf8f3;color:#12394d;font:15px/1.7 system-ui,sans-serif;margin:0}main{max-width:900px;margin:auto;padding:48px 24px}h1,h2{font-family:Georgia,serif;line-height:1.25}h1{font-size:38px;margin:8px 0 16px}h2{font-size:23px}.brand{color:#247c78;font-size:12px;letter-spacing:2px}section{background:#fff;border:1px solid #e5eae5;border-radius:20px;padding:24px;margin:22px 0}label{display:block;margin:14px 0 5px;font-weight:600}input,select{width:100%;padding:13px;border:1px solid #c9d8d1;border-radius:12px;font:inherit;background:#fff}button,a.button{border:0;background:#247c78;color:white;padding:12px 18px;border-radius:12px;font:inherit;cursor:pointer;text-decoration:none;display:inline-block;margin:8px 8px 0 0}button.secondary{background:#edf4ef;color:#247c78}button:disabled{opacity:.5;cursor:wait}.muted{color:#6b7d82;font-size:13px}.profile{padding:16px 0;border-bottom:1px solid #e5eae5}.pill{color:#247c78;background:#e7f2eb;border-radius:20px;padding:4px 9px;font-size:12px;margin-left:6px}.pill.provider{color:#12394d;background:#e7f1f8}#notice{white-space:pre-wrap;padding:14px;background:#e7f2eb;border-radius:12px}#notice:empty{display:none}nav a{color:#247c78}footer{font-size:12px;color:#6b7d82}code{background:#f4f6f3;padding:2px 4px}details{margin:15px 0}.hintbox{background:#f4f8f5;border:1px solid #d7e7dc;border-radius:14px;padding:14px;margin:14px 0;font-size:13.5px}</style>
+<main><div class="brand">VĂNMẠCH · QUẢN TRỊ TRÊN MÁY</div><h1>Kết nối AI của bạn.<br>Google Gemini hoặc OpenAI.</h1><p>Đổi nhà cung cấp hoặc hồ sơ AI đang dùng mà không cần sửa hay cài lại ứng dụng. Khóa được mã hóa AES-256-GCM trên máy chủ cục bộ.</p>
+<nav><a href="/">← Mở VănMạch</a></nav><p id="notice" role="status"></p>
+<section><h2>Hồ sơ AI</h2><div id="profiles">Đang tải…</div><p class="muted">Chuyển hồ sơ áp dụng ngay cho yêu cầu AI mới. Chỉ có một hồ sơ kích hoạt tại một thời điểm.</p></section>
+<section><h2 id="formTitle">Thêm hồ sơ</h2><form id="form" autocomplete="off"><input id="profileId" type="hidden">
+<label for="provider">Nhà cung cấp AI</label>
+<select id="provider">
+<option value="gemini">Google Gemini (AI Studio)</option>
+<option value="openai">OpenAI</option>
+</select>
+<div class="hintbox" id="geminiGuide">Lấy khóa Gemini API miễn phí: vào <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio (aistudio.google.com/apikey)</a>, đăng nhập tài khoản Google của bạn và bấm <strong>Create API key</strong> (dạng <code>AIza…</code>). Model khuyên dùng: <code>gemini-3.5-flash-lite</code>.</div>
+<label for="name">Tên dễ nhận biết</label><input id="name" required maxlength="60" placeholder="Ví dụ: Gemini cá nhân hoặc VănMạch · Trường A">
+<label for="model">Model API</label><input id="model" required value="gemini-3.5-flash-lite" maxlength="100"><p class="muted" id="modelHint">Gợi ý Gemini: <code>gemini-3.5-flash-lite</code> (nhanh, miễn phí ổn định) hoặc <code>gemini-3-flash-preview</code>.</p>
+<label for="key" id="keyLabel">Khóa Google Gemini API</label><input id="key" type="password" autocomplete="new-password" spellcheck="false" placeholder="AIza…" maxlength="303"><p class="muted">Khóa được mã hóa khi lưu trên máy chủ. Không hiển thị lại, không đưa vào app hoặc gói bàn giao. Để trống khi sửa để giữ khóa hiện tại.</p>
+<button id="save" type="submit">Lưu hồ sơ</button><button type="button" class="secondary" id="cancel">Làm mới biểu mẫu</button></form></section>
+<section><h2>Hướng dẫn nhanh & Bàn giao</h2><ol><li>Gửi gói bàn giao sạch, không gửi thư mục <code>.data</code> hoặc tệp <code>.env</code>.</li><li>Chạy máy chủ rồi mở trang <code>/admin</code> này trên máy chủ cục bộ.</li><li>Chọn nhà cung cấp (<strong>Google Gemini</strong> hoặc <strong>OpenAI</strong>), dán khóa và lưu hồ sơ.</li><li>Bấm <strong>“Dùng hồ sơ này”</strong> rồi bấm <strong>“Kiểm tra kết nối”</strong>, sau đó thử hỏi Trợ giảng AI trong VănMạch.</li></ol><p class="muted">Kiểm tra kết nối đọc danh sách model trực tiếp từ Google Gemini hoặc OpenAI để xác minh khóa và tên model.</p></section>
+<section id="payos"><h2>Thanh toán payOS</h2><p id="payosStatus" role="status">Đang tải trạng thái…</p>
+<p>Nhập thông tin từ cùng kênh thanh toán VănMạch. Lưu cấu hình chưa bật thu tiền và chưa kiểm tra kết nối với payOS.</p>
+<form id="payosForm" autocomplete="off">
+<label for="payosClient">Client ID</label><input id="payosClient" type="password" required minlength="16" maxlength="256" autocomplete="new-password" spellcheck="false">
+<label for="payosApi">API Key payOS</label><input id="payosApi" type="password" required minlength="16" maxlength="256" autocomplete="new-password" spellcheck="false">
+<label for="payosChecksum">Checksum Key</label><input id="payosChecksum" type="password" required minlength="16" maxlength="256" autocomplete="new-password" spellcheck="false">
+<p class="muted">Cả ba giá trị được mã hóa trên máy chủ và không hiển thị lại. Khi thay cấu hình, nhập lại đủ ba ô. Không dùng khóa AI ở đây.</p>
+<button type="submit">Lưu cấu hình payOS</button><button type="button" class="secondary" id="clearPayos">Xóa nội dung vừa nhập</button><p id="payosFeedback" role="status" aria-live="polite" style="font-weight:600;color:#247c78"></p></form></section>
+<footer>Trang quản trị chỉ dùng trên máy chủ cục bộ. Bản thử nghiệm chưa có tài khoản quản trị cho triển khai Internet. Không mở công khai cổng dịch vụ.</footer></main>
+<script>
+const csrf='__CSRF__';let list=[];let busy=false;
+const notice=document.getElementById('notice');
+const providerEl=document.getElementById('provider');
+const modelEl=document.getElementById('model');
+const keyEl=document.getElementById('key');
+const keyLabelEl=document.getElementById('keyLabel');
+const modelHintEl=document.getElementById('modelHint');
+const geminiGuideEl=document.getElementById('geminiGuide');
+function syncProviderUI(forceModel){
+ const p=providerEl.value;
+ if(p==='gemini'){
+  if(forceModel||!modelEl.value||modelEl.value.startsWith('gpt-'))modelEl.value='gemini-3.5-flash-lite';
+  keyLabelEl.textContent='Khóa Google Gemini API';
+  keyEl.placeholder='AIza…';
+  modelHintEl.innerHTML='Gợi ý Gemini: <code>gemini-3.5-flash-lite</code> (nhanh, hỗ trợ chữ/ảnh/PDF) hoặc <code>gemini-3-flash-preview</code>.';
+  geminiGuideEl.style.display='block';
+ }else{
+  if(forceModel||!modelEl.value||modelEl.value.startsWith('gemini-'))modelEl.value='gpt-5-mini';
+  keyLabelEl.textContent='Khóa OpenAI API';
+  keyEl.placeholder='sk-…';
+  modelHintEl.textContent='Chọn model hỗ trợ Responses API và reasoning (ví dụ: gpt-5-mini). Quyền truy cập tùy tài khoản API.';
+  geminiGuideEl.style.display='none';
+ }
+}
+providerEl.onchange=()=>syncProviderUI(true);
+function say(t){notice.textContent=t;}
+async function api(path,body){const r=await fetch('/api/admin/'+path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json','X-Admin-Token':csrf},...(body?{body:JSON.stringify(body)}:{})});const j=await r.json();if(!r.ok)throw Error(j.error);return j;}
+function button(label,action,secondary=false){const b=document.createElement('button');b.textContent=label;b.className=secondary?'secondary':'';b.onclick=()=>run(action);return b;}
+async function run(fn){if(busy)return;busy=true;document.querySelectorAll('button').forEach(b=>b.disabled=true);try{await fn();}catch(e){say(e.message);}finally{busy=false;document.querySelectorAll('button').forEach(b=>b.disabled=false);}}
+async function load(){const r=await api('profiles');list=r.profiles;const root=document.getElementById('profiles');root.replaceChildren();if(!list.length)root.textContent='Chưa có hồ sơ. Thêm khóa Gemini hoặc OpenAI bên dưới.';
+for(const p of list){const row=document.createElement('div');row.className='profile';const heading=document.createElement('strong');heading.textContent=p.name+' ';row.append(heading);const prov=document.createElement('span');prov.className='pill provider';prov.textContent=p.provider==='gemini'?'Gemini':'OpenAI';row.append(prov);if(p.active){const tag=document.createElement('span');tag.className='pill';tag.textContent='Đang dùng';row.append(tag);}const info=document.createElement('p');info.className='muted';info.textContent=p.model+' · Khóa '+p.hint;row.append(info);
+if(!p.active)row.append(button('Dùng hồ sơ này',async()=>{await api('activate',{id:p.id});say('Đã chuyển sang '+p.name+'.');await load();}));
+row.append(button('Kiểm tra kết nối',async()=>{const result=await api('check',{id:p.id});say(result.message);},true));
+row.append(button('Sửa',()=>{document.getElementById('profileId').value=p.id;providerEl.value=p.provider||'openai';syncProviderUI(false);document.getElementById('name').value=p.name;modelEl.value=p.model;keyEl.value='';document.getElementById('formTitle').textContent='Sửa hồ sơ';document.getElementById('form').scrollIntoView({behavior:'smooth'});},true));
+if(!p.active)row.append(button('Xóa hồ sơ',async()=>{if(!confirm('Xóa khóa đã lưu của '+p.name+' trên máy này?'))return;await api('remove',{id:p.id});say('Đã xóa hồ sơ.');await load();},true));root.append(row);}
+if(r.environmentActive){const info=document.createElement('p');info.textContent='Hiện đang dùng khóa từ cấu hình môi trường.';root.append(info);}}
+document.getElementById('form').onsubmit=e=>{e.preventDefault();run(async()=>{const payload={id:document.getElementById('profileId').value||undefined,provider:providerEl.value,name:document.getElementById('name').value,model:modelEl.value.trim(),apiKey:keyEl.value.trim()};await api('profiles',payload);keyEl.value='';say('Đã lưu hồ sơ. Chọn “Dùng hồ sơ này” để kích hoạt.');reset();await load();});};
+function reset(){document.getElementById('form').reset();document.getElementById('profileId').value='';providerEl.value='gemini';syncProviderUI(true);document.getElementById('formTitle').textContent='Thêm hồ sơ';}
+document.getElementById('cancel').onclick=reset;syncProviderUI(true);load().catch(e=>say(e.message));
+function showPayos(status){const message=status.configured?'Đã lưu cấu hình payOS · Chưa kiểm tra kết nối · Chưa bật thanh toán.':'Chưa có cấu hình payOS.';document.getElementById('payosStatus').textContent=message;document.getElementById('payosFeedback').textContent=message;}
+const payosForm=document.getElementById('payosForm');
+document.getElementById('clearPayos').onclick=()=>payosForm.reset();
+payosForm.onsubmit=e=>{e.preventDefault();run(async()=>{
+ const payload={clientId:document.getElementById('payosClient').value.trim(),apiKey:document.getElementById('payosApi').value.trim(),checksumKey:document.getElementById('payosChecksum').value.trim()};
+ document.getElementById('payosFeedback').textContent='Đang lưu…';
+ try{const result=await api('payos',payload);showPayos(result);say('Đã lưu cấu hình payOS an toàn trên máy. Chưa bật thanh toán.');}
+ catch(error){document.getElementById('payosFeedback').textContent='Chưa lưu được: '+error.message;}
+ finally{payosForm.reset();for(const field of Object.keys(payload))payload[field]='';}
+});};
+api('payos').then(showPayos).catch(()=>{document.getElementById('payosStatus').textContent='Không tải được trạng thái payOS. Hãy tải lại trang.';});
+</script></html>

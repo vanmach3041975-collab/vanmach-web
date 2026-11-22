@@ -1,0 +1,15 @@
+**
+!08_BACKEND/
+!08_BACKEND/*.mjs
+08_BACKEND/*.test.mjs
+!08_BACKEND/package.json
+!08_BACKEND/pnpm-lock.yaml
+!08_BACKEND/admin.html
+!02_FLUTTER_APP/
+!02_FLUTTER_APP/assets/
+!02_FLUTTER_APP/assets/content/
+!02_FLUTTER_APP/assets/content/works.json
+!02_FLUTTER_APP/build/
+!02_FLUTTER_APP/build/web/
+!02_FLUTTER_APP/build/web/**
+!Dockerfile

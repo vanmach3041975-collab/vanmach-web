@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#FAF8F3">
+  <meta name="description" content="VănMạch — học Ngữ văn THPT qua sơ đồ, AI và trải nghiệm tương tác.">
+
+  <!-- iOS / Mobile Web meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="VănMạch">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>VănMạch</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      margin: 0;
+      padding: 0;
+      background-color: #FAF8F3;
+      overscroll-behavior-y: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    #vanmach-loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #FAF8F3;
+      color: #12394D;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      z-index: 9999;
+      transition: opacity 0.25s ease;
+    }
+    #vanmach-loader .dot {
+      width: 34px;
+      height: 34px;
+      border: 3px solid #E5EAE5;
+      border-top-color: #247C78;
+      border-radius: 50%;
+      animation: vanmach-spin 0.8s linear infinite;
+    }
+    #vanmach-loader .title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    #vanmach-loader .sub {
+      font-size: 13px;
+      color: #6B7D82;
+    }
+    @keyframes vanmach-spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="vanmach-loader" role="status" aria-live="polite">
+    <div class="dot"></div>
+    <div class="title">VănMạch</div>
+    <div class="sub">Đang mở không gian học Ngữ văn…</div>
+  </div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var loader = document.getElementById('vanmach-loader');
+      if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(function () { loader.remove(); }, 260);
+      }
+    });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

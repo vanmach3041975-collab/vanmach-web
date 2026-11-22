@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: vanmach-web
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: VANMACH_DATA_DIR
+        value: /data
+      - key: FIREBASE_PROJECT_ID
+        value: vanmach-8b20f
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: VANMACH_UNLIMITED_AI
+        value: "1"
+      - key: VANMACH_OPEN_FEATURES
+        value: "1"
+      - key: GEMINI_API_KEY
+        sync: false

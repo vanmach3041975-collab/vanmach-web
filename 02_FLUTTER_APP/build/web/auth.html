@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="vi"><meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Trở lại VănMạch</title>
+<body style="background:#faf8f3;color:#12394d;font:18px system-ui;padding:12vh 24px;text-align:center"><h1>Trở lại VănMạch</h1><p>Bạn có thể đóng cửa sổ này nếu ứng dụng chưa tự quay lại.</p>
+<script>
+const message={'flutter-web-auth-2':window.location.href};
+if(window.opener){window.opener.postMessage(message,window.location.origin);window.close();}
+else if(window.parent!==window){window.parent.postMessage(message,window.location.origin);}
+// The URL contains a short-lived, verifier-bound ticket, never a session token.
+</script></body></html>

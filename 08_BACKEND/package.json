@@ -1,0 +1,1 @@
+{"name":"vanmach-backend","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test"},"engines":{"node":">=24"},"dependencies":{"jose":"^6.2.12","nodemailer":"^7.0.13"}}
